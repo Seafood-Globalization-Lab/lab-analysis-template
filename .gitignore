@@ -1,20 +1,26 @@
 # User-specific files
 .Ruserdata
-
-# Example code in package build process
-*-Ex.R
-
-# Output files from R CMD build
-/*.tar.gz
-
-# Output files from R CMD check
-/*.Rcheck/
-
-# RStudio files
+.DS_Store
+.Rhistory
 .Rproj.user/
+
+# R Environment Variables
+.Renviron
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
+
+# Ignore contents in the data directory
+/data/*
+!/data/.gitkeep
+
+# Ignore contents in folder (may not want to ignore based on your project)
+/figures/*
+
+# Package build and check files
+*-Ex.R
+/*.tar.gz
+/*.Rcheck/
 
 # knitr and R markdown default cache directories
 *_cache/
@@ -24,22 +30,14 @@
 *.utf8.md
 *.knit.md
 
-# R Environment Variables
-.Renviron
-
-# rendered analysis html - can change later if needed
+# Intermediate files for rendered docs
 *.html
+*.aux
+*.pdf
+!README.pdf
+*_files
+*.log
+*.tex
 
-# Ignore everything in the "data" directory
-/data/*
-!/data/.gitkeep
-
-# Commit these to Git - Need for renv
-# .Rprofile
-# renv.lock
-# renv/settings.json
-#renv/activate.R
-
-# Ignore renv cache and library
-renv/library/
-renv/cache/
+# PositAI Gen AI in Rstudio and Positron
+.positai

@@ -1,0 +1,124 @@
+---
+title: "The Seafood Globalization Lab's Template Report"
+subtitle: "To support reproducible open-science workflows"
+author: 
+  - name: Author Name
+    orcid: 0000-0000-0000-0000
+    email: email
+    affiliations:
+      - name: University of Washington
+  - name: Author Name
+    orcid: 0000-0000-0000-0000
+    email: email
+    affiliations:
+      - name: University of Washington
+date: last-modified
+date-format: "YYYY-MM-DD"
+theme: cosmo 
+number-sections: true
+title-block-banner: TRUE
+format: 
+  html: 
+    toc: true
+    self-contained: true
+    page-layout: full
+    code-fold: true
+    code-tools: true
+    code-line-numbers: true
+execute:
+     echo: false
+     include: false
+     warning: false
+---
+
+## What is This Document? 
+
+This is a Quarto Document meant to serve as an report template for the Seafood Globalization Lab. 
+We outfitted this document with 3 key parts for a reproducible and open-science workflows: 
+
+1. A `YAML` header with some basic document metadata and settings. 
+2. A reliable way to manage software package and versioning using the `pak` package. 
+(see the `setup-pkgs` code chunk below and the `./00_write_pkg_deps.R` file)
+3. An example of how one can name and organize their directory paths (see `setup-params-paths-funs`)
+
+### Tips
+
+- Put every new sentence in markdown on a new code line. Git tracks changes line-by-line, so this will give your document `git diff`s the most detailed resolution. 
+- If you are going to have multiple lengthy sections, think about knitting together child quarto docs to break up the report and compile into larger document. 
+- Name code blocks similarly to good file naming conventions (*e.g.* `setup-pkgs` and `setup-params-paths-funs` show a user the blocks are related but do different things).
+The code block names can be used to navigate the document in the Rstudio or Positron document outline. 
+Set with the `#| label:` code block option.
+
+### More Resources
+
+1. [The official Quarto Documentation](https://quarto.org/docs/guide/)
+2. [Quarto: The Practical Guide](https://quarto-tdg.org/)
+3. [The NCEAS Learning Hub's coreR Course book](https://learning.nceas.ucsb.edu/2024-10-coreR/session_05.html)
+4. Reach out to a human and setup a consult or brainstorm session. 
+
+## Connect to the Lab's Server
+
+The Lab maintains a UW server to share and store datasets and analyses. 
+You will likely need to connect to the server using the instructions below and code similar to the `setup-params-paths-funs` code block in this document. 
+
+**If you are on the UW campus:**
+
+- Log onto the `gephartlab.fish` server (see lab manual for more details)
+- Map the server to your local machine [(UW instructions here)](https://uwconnect.uw.edu/it?id=kb_article_view&sysparm_article=KB0034311)
+
+**If you are remote:**
+
+- Log onto the Husky OnNet VPN [(UW instructions here)](https://uwconnect.uw.edu/it?id=kb_article_view&sysparm_article=KB0034243)
+- Map the server to your local machine [(UW instructions here)](https://uwconnect.uw.edu/it?id=kb_article_view&sysparm_article=KB0034311) 
+
+
+```{r}
+#| label: setup-pkgs
+
+# make Posit package manager primary install repo (uses faster binaries)
+# @ snapshot date - hold all package versions to the "latest" version at this date
+# Think about updating this date, but a few months delayed from "today" to avoid release bugs
+pak::repo_add(CRAN = "RSPM@2025-10-31")
+
+# install packages
+pak::pak(c(
+  "arrow",
+  "dplyr",
+  "tidyr",
+  "glue"
+))
+# load packages
+{
+  library(arrow)
+  library(dplyr)
+  library(tidyr)
+  library(glue)
+}
+
+```
+
+```{r}
+#| label: setup-params-paths-funs
+
+# Set data parameters
+artis_version <- "1.2"
+artis_prod_type <- "FAO"
+
+# set analysis parameters
+analysis_hs_version <- c("HS17")
+analysis_year <- c(2020)
+
+# point to UW NAS gephartlab.fish server from MacOS 
+# may require VPN connection and mapping the server to local computer
+path_artis_dir <- "/Volumes/gephartlab/data-storage/artis"
+path_analysis <- "/Volumes/gephartlab/analyses/your-analysis-folder"
+
+# Construct data paths
+path_artis <- file.path(path_artis_dir, glue("ARTIS_v{artis_version}_{artis_prod_type}_database_KNB"))
+path_artis_ref_tbls <- file.path(path_artis, "reference_tables")
+
+
+# read in custom functions 
+source("00_functions.R")
+
+```
