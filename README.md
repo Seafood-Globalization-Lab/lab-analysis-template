@@ -1,4 +1,4 @@
-# R-analysis-template
+# Lab-analysis-template
 
 ## Purpose
 A template analysis repository for the Seafood Globalization Lab that standardizes new project setup with package management, directory structure, and a Quarto report scaffold to support reproducible, collaborative, and open-science workflows.
