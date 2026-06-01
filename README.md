@@ -7,7 +7,7 @@ A template analysis repository that standardizes new project setup with package 
 
 Lab members and collaborators at the Seafood Globalization Lab who are starting a new R-based analysis. 
 
-### Key components of the template:
+## Key components
 
 - `report.qmd` - a Quarto report pre-configured for open-science workflows
 pak-based package management with a snapshot-pinned CRAN repository for reproducibility
